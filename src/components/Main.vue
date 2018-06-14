@@ -5,10 +5,6 @@
 </div>
 </template>
 
-
-
-
-
 <script>
 import * as echarts from 'echarts'
 
@@ -43,7 +39,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
 
