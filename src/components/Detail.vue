@@ -1,57 +1,120 @@
 <template>
     <div>
         <el-row>
+            <el-row>
+                <el-col :span="18">
+                    <div class="grid-content">
+                        <div class="move date">
+                            <p>2018年6月18日</p>
+                            <p>星期六</p>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <div class="dirFont">
+                            <span>
+                                <i class="el-icon-date dircolor"></i>
+                                <span class="dir dircolor span">{{totalCost.total}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
 
-            <el-col :span="20">
-                <div class="grid-content bg-purple">
-                    <div class="move">
-                        <p></p>
-                        <p>星期六</p>
-                        <p>2018-8-8</p>
+            <el-row v-for="item in items">
+                <el-col :span="19">
+                    <div class="move dir ">
+                        <p class="placeShop">{{ item.dir }}</p>
+                        <p class="shopName">{{item.shopname}}</p>
                     </div>
-                </div>
-            </el-col>
-            <el-col :span="4">
-                <div class="grid-content bg-purple-light">
-                    <div class="">
-                        <br>
-                        <p>{{totalCost.total}}</p>
-                    </div>
-                </div>
-            </el-col>
-        </el-row>
 
-        <el-row v-for="item in items">
-            <el-col :span="20">
-                <div>
-                   
-                    {{ item.dir }}
+                </el-col>
+                <el-col :span="5">
+                    <div class="dircolor deatilCost">
+                        <i class="el-icon-date"></i>
+                        {{item.txamt}}
+                    </div>
+                </el-col>
+            </el-row>
 
-                </div>
+            <el-row style="border-top: 1px solid #80808082;">
 
-            </el-col>
-            <el-col :span="2">
-                <div class="">
-                    <i class="el-icon-date"></i>
-                    {{item.txamt}}
+                <el-col :span="18">
+                    <div class="grid-content">
+                        <div class="move date">
+                            <p>2018年6月19日</p>
+                            <p>星期六</p>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <div class="dirFont">
+                            <span>
+                                <i class="el-icon-date dircolor"></i>
+                                <span class="dir dircolor span">{{totalCost.total}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
 
-                    <!-- <div style="margin-top:6px">
-                        <p>{{totalCost.One}}</p>
+            <el-row v-for="item in items">
+                <el-col :span="19">
+                    <div class="move dir ">
+                        <p class="placeShop">{{ item.dir }}</p>
+                        <p class="shopName">{{item.shopname}}</p>
                     </div>
-                    <div class="moneyNum">
-                        <p>{{totalCost.Two}}</p>
+
+                </el-col>
+                <el-col :span="5">
+                    <div class="dircolor deatilCost">
+                        <i class="el-icon-date"></i>
+                        {{item.txamt}}
                     </div>
-                    <div class="moneyNum">
-                        <p>{{totalCost.Three}}</p>
+                </el-col>
+            </el-row>
+
+            <el-row style="border-top: 1px solid #80808082;">
+
+                <el-col :span="18">
+                    <div class="grid-content">
+                        <div class="move date">
+                            <p>2018年6月20日</p>
+                            <p>星期六</p>
+                        </div>
                     </div>
-                    <div class="moneyNum">
-                        <p>{{totalCost.Four}}</p>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <div class="dirFont">
+                            <span>
+                                <i class="el-icon-date dircolor"></i>
+                                <span class="dir dircolor span">{{totalCost.total}}</span>
+                            </span>
+                        </div>
                     </div>
-                    <div class="moneyNum">
-                        <p>{{totalCost.Five}}</p>
-                    </div> -->
-                </div>
-            </el-col>
+                </el-col>
+            </el-row>
+
+            <el-row v-for="item in items">
+                <el-col :span="19">
+                    <div class="move dir">
+                        <p class="placeShop">{{ item.dir }}</p>
+                        <p class="shopName">{{item.shopname}}</p>
+                    </div>
+
+                </el-col>
+                <el-col :span="5">
+                    <div class="dircolor deatilCost">
+                        <p class="">
+                            <i class="el-icon-date"></i>
+                            {{item.txamt}}
+                        </p>
+                    </div>
+                </el-col>
+            </el-row>
         </el-row>
     </div>
 </template>
@@ -72,8 +135,6 @@ export default {
       items: []
     }
   },
-  methods() {},
-
   mounted() {
     let that = this
     this.$http.post('http://MonthData.cn').then(function(res) {
@@ -86,6 +147,40 @@ export default {
 </script>
 
 <style scoped>
+.bel-col {
+  border-top: 1px solid #80808082;
+}
+.date {
+  color: gray;
+  font-size: 10px;
+  padding-top: 5px;
+}
+.deatilCost {
+  margin: 15px 0;
+  font-size: 15px;
+}
+.top {
+  margin: 2px 0;
+}
+.dirFont {
+  position: absolute;
+  bottom: 0;
+  font-size: 12px;
+  right: 31px;
+}
+.span {
+  display: inline-block;
+}
+.dircolor {
+  color: #e66b45;
+}
+.placeShop {
+  font-size: 14px;
+}
+.shopName {
+  font-size: 12px;
+  color: gray;
+}
 .fontSize {
   font-size: 7px;
   color: gray;
@@ -99,25 +194,12 @@ export default {
 .placeName {
   margin-top: 22px;
 }
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
+.dir {
+  margin: 10px 0 5px;
 }
 .grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
+  background-color: #ebeef56e;
+  min-height: 42px;
 }
 </style>
 
