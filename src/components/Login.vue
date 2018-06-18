@@ -6,7 +6,6 @@
     </div>
 
     <div class="el-form">
-
       <el-form class="form-inline" :model="ruleForm" ref="ruleForm" :rules="rules">
 
         <el-form-item prop="password">

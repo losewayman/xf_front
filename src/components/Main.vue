@@ -22,7 +22,6 @@
       <img :src="imgRed" alt="">
       <span>消费流水</span>
     </div>
-
     <el-row>
       <el-col :span="12">
         <div class="grid-content bg-purple">
@@ -132,7 +131,6 @@
     </el-row>
   </div>
 </template>
-
 <script>
 import * as echarts from 'echarts'
 import Red from './../assets/u107.png'
