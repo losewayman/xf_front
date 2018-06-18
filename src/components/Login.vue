@@ -9,7 +9,7 @@
 
       <el-form class="form-inline" :model="ruleForm" ref="ruleForm">
 
-        <el-form-item prop="password">
+        <el-form-item prop="password"  v-if="isPass">
 
           <el-input type="password" name="password" v-model="ruleForm.cardpwd" placeholder="请输入你的一卡通密码" class="login-form-input"></el-input>
 
@@ -17,7 +17,7 @@
 
         <el-form-item class="indentify-form" prop="indentify">
           <el-input type="text" class="identify" name="indentifyCode" v-model="ruleForm.validate"></el-input>
-          <img src="static/img/chckcode.jpg" alt="验证码" class="indentifyPicture">
+          <img :src="checkImg" alt="验证码" class="indentifyPicture">
         </el-form-item>
 
         <el-form-item class="login-btn">
@@ -37,61 +37,38 @@
 </template>
 
 <script>
-import imgOne from './../assets/u13.jpg'
-import imgTwo from './../assets/u11.png'
-
 export default {
   data() {
     return {
-      imgUrl: imgOne,
+      checkImg: 'http://118.126.110.182:8002/static/img/chckcode.jpg',
+      imgUrl: 'http://118.126.110.182:8002/static/dist/src/assets/u13.jpg',
       ruleForm: {
         cardpwd: '',
         validate: ''
       }
     }
   },
+  created(){
+    // 验证是否需要一卡通密码
+    var isParams = document.cookie.split(';')[0].split('=')[1]
+    if (isParams === '1') {
+      this.isPass = true;
+    } else {
+      this.isPass = false
+    }
+  },
   methods: {
-    // onSubmit() {
-    //   this.$http
-    //     .post('http://118.126.110.182:8002/api/check')
-    //     .then(function(response) {
-    //       console.log(response.data)
-    //       console.log(response.status)
-    //       console.log(response.statusText)
-    //       console.log(response.headers)
-    //       console.log(response.config)
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error)
-    //     })
-    // }
-    onSubmit(formName) {
-      const self = this
-      self.$refs[formName].validate(valid => {
-        if (valid) {
-          localStorage.setItem('cardpwd', self.ruleForm.name)
-          localStorage.setItem('ms_user', JSON.stringify(self.ruleForm))
-          console.log(JSON.stringify(self.ruleForm))
-          self.$http
-            .post('http://api.komavideo.com/news/list', JSON.stringify(self.ruleForm))
-            .then(response => {
-              console.log(response);
-              if (response.data == 0) {
-                console.log('密码错误')
-                self.errorInfo = true
-                self.errInfo = '密码错误'
-              } else if (response.status == 200) {
-                self.$router.push('/index')
-              }
-            })
-            .then(error => {
-              console.log(error)
-            })
-        } else {
-          console.log('error submit')
-          return false
-        }
-      })
+    onSubmit() {
+      let _this = this;
+      this.$http
+        .post('http://118.126.110.182:8002/api/check')
+        .then(function(res) {
+          console.log('前端',res)
+          this.$router.push('/index')
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 }
