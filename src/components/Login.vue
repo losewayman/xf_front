@@ -6,8 +6,7 @@
     </div>
 
     <div class="el-form">
-
-      <el-form class="form-inline" :model="ruleForm" ref="ruleForm">
+      <el-form class="form-inline" :model="ruleForm" ref="ruleForm" :rules="rules">
 
         <el-form-item prop="password">
 
@@ -16,8 +15,8 @@
         </el-form-item>
 
         <el-form-item class="indentify-form" prop="indentify">
-          <el-input type="text" class="identify" name="indentifyCode" v-model="ruleForm.validate"></el-input>
-          <img src="static/img/chckcode.jpg" alt="验证码" class="indentifyPicture">
+          <el-input type="text" class="identify" name="indentify" v-model="ruleForm.validate"></el-input>
+          <img src="http://118.126.110.182:8002/static/img/chckcode.jpg" alt="验证码" class="indentifyPicture">
         </el-form-item>
 
         <el-form-item class="login-btn">
@@ -47,35 +46,36 @@ export default {
       ruleForm: {
         cardpwd: '',
         validate: ''
-      }
+      },
+      rules: {
+        cardpwd: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 1, message: '长度需大于1个字符', trigger: 'blur' }
+        ],
+        validate: [
+          { required: true, message: '请输入验证码', trigger: 'blur' }
+        ]
+      } //表单数据验证
     }
   },
   methods: {
-    // onSubmit() {
-    //   this.$http
-    //     .post('http://118.126.110.182:8002/api/check')
-    //     .then(function(response) {
-    //       console.log(response.data)
-    //       console.log(response.status)
-    //       console.log(response.statusText)
-    //       console.log(response.headers)
-    //       console.log(response.config)
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error)
-    //     })
-    // }
+    //axios发送表单数据
     onSubmit(formName) {
       const self = this
       self.$refs[formName].validate(valid => {
         if (valid) {
-          localStorage.setItem('cardpwd', self.ruleForm.name)
+          localStorage.setItem('cardpwd', self.ruleForm.cardpwd)
           localStorage.setItem('ms_user', JSON.stringify(self.ruleForm))
+
           console.log(JSON.stringify(self.ruleForm))
+
           self.$http
-            .post('http://api.komavideo.com/news/list', JSON.stringify(self.ruleForm))
+            .post(
+              'http://api.komavideo.com/news/list',
+              JSON.stringify(self.ruleForm)
+            )
             .then(response => {
-              console.log(response);
+              console.log(response)
               if (response.data == 0) {
                 console.log('密码错误')
                 self.errorInfo = true
