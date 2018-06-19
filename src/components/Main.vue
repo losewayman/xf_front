@@ -12,7 +12,7 @@
         <el-col :span="12">
             <div class="grid-content bg-purple-light cash">
                 <p class="text-cash">{{checkTab}}月支出<br>
-                    <span class="text-cash-span">{{dayData.cost}}</span>
+                    <span class="text-cash-span">{{parseInt(dayData.cost)}}</span>
                 </p>
             </div>
         </el-col>
@@ -81,7 +81,7 @@
     <el-col :span="24">
         <div class="tabs">
             <el-tabs
-                v-model="activeName"
+                v-model="checkTab"
                 @tab-click="handleClick"
                 class="tabsWidth"
             >
@@ -196,7 +196,6 @@ export default {
             imgThree: picThree,
             imgFour: picFour,
             imgRed: Red,
-            activeName: 'first',
             balance: '',
             cost: '',
             dayData: {
@@ -247,76 +246,6 @@ export default {
                     // center: ['10%', '10%']
                 }]
             },
-            // getBarOption: {
-            //     title: { //标题组件
-            //         text: '吃货统计',
-            //         top: '5px',
-            //         left: '8px', //标题的位置 默认是left，其余还有center、right属性
-            //         textStyle: {
-            //             color: "#696969",
-            //             fontSize: 14,
-            //         }
-            //     },
-            //     tooltip: {},
-            //     xAxis: [{
-            //         type : 'category',
-            //         data: ['香锅', '冒菜', '土豆片夹馍', '方便面', '快餐'],
-            //         axisTick: {
-            //             inside: true,
-            //             show: false,
-            //             alignWithLabel: true,
-            //         },
-            //         // axisLabel: {
-            //         //     formatter: function (val) {
-            //         //         return val.split("").join("\n");
-            //         //     }
-            //         // }
-            //     }],
-            //     grid: { // 控制图的大小，调整下面这些值就可以，
-            //         name:'消费数额',
-            //         type:'bar',
-            //         barWidth: '60%',
-            //         // x: 40,
-            //         // x2: 10,
-            //         // y2: 80, // y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
-            //     },
-            //     yAxis: {
-            //         allowDecimals: Boolean,
-            //         ceiling: 150,
-            //         max: 150,
-            //         name: '（金额/元）',
-            //         min: 0,
-            //         splitNumber: 30 //改变坐标轴的分割段数
-            //     },
-            //     series: [{
-            //         name: '',
-            //         type: 'bar',
-            //         data: [],
-            //         barWidth: 40,
-            //         itemStyle: {
-            //             normal: {
-            //                 //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
-            //                 color: function (params) {
-            //                     let colorList = [
-            //                         'rgb(205,38,38)',
-            //                         'rgb(106,90,205)',
-            //                         'rgb(64,224,208)',
-            //                         'rgb(235,142,85)',
-            //                         'rgb(176,224,230)'
-            //                     ]
-            //                     return colorList[params.dataIndex]
-            //                 }
-            //             },
-            //             barGap: '20%',
-            //             //鼠标悬停时：
-            //             emphasis: {
-            //                 shadowBlur: 10,
-            //                 shadowOffsetX: 0,
-            //                 shadowColor: 'rgba(0, 0, 0, 0.5)'
-            //             }
-            //         }
-            //     }]
-            // },
             getBarOption: {
                 color: ['#3398DB'],
                 tooltip: {
@@ -385,7 +314,7 @@ export default {
                 if (res.data.status === 0) {
                     _this.dayData.balance = res.data.data[0].balance
                     // _this.dayData.cost = res.data.cost
-                    _this.dayData.pay = res.cost
+                    _this.dayData.pay = parseInt(res.cost);
                     // _this.dayData.dirOne = res.data.data[0].dir
                     // _this.dayData.daily = res.data.data[0].txdate
                     // _this.dayData.shopnameOne = res.data.data[0].shopname
@@ -409,7 +338,7 @@ export default {
             .then(function (res) {
 
                 if (res.data.status === 0) {
-                    _this.dayData.cost = res.data.cost
+                    _this.dayData.cost = parseInt(res.data.cost);
                 } else {
                     _this.$message.error("获取失败");
                 }
@@ -429,8 +358,8 @@ export default {
             .then(function (res) {
 
                 if (res.data.status === 0) {
-                    _this.dayData.pay = res.data.cost;
-                    _this.dayData.data = res.data.data.slice(0,2);
+                    _this.dayData.pay = parseInt(res.data.cost);
+                    _this.dayData.data = res.data.data.slice(0, 3);
 
                 } else {
                     _this.$message.error("获取失败");
@@ -506,7 +435,7 @@ export default {
                                 left: 'center',
                                 top: 'center',
                                 style: {
-                                    text: res.data.cost + '\r\n总支出',
+                                    text: parseInt(res.data.cost) + '\r\n总支出',
                                     textAlign: 'center',
                                     fill: '#000',
                                     width: 30,
