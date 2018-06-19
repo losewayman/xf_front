@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Main from '../components/Main.vue'
 import Detail from '../components/Detail.vue'
+import notFound from '../components/notFound.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -10,6 +11,7 @@ const routes = [
     { path: '/login', component: Login},
     { path: '/index', component: Main},
     { path: '/detail', component: Detail},
+    { path: '*', component: notFound},
     
 ]
 

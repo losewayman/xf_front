@@ -132,16 +132,12 @@
   </div>
 </template>
 <script>
+
 import * as echarts from 'echarts'
 import Red from './../assets/u107.png'
-// import NewData from './../mock//NewData.js'
 // import WeekData from './../mock//WeekData.js'
 // import MonthData from './../mock//MonthData.js'
 import picOne from './../assets/u106.png'
-import picTwo from './../assets/u109.png'
-import picThree from './../assets/u143.png'
-import picFour from './../assets/u108.png'
-
 export default {
   data() {
     return {
@@ -268,8 +264,6 @@ export default {
   },
 
   mounted() {
-    // echarts.init(document.getElementById('demo')).setOption({})
-
     this.drawLinePie() //扇形图
     this.drawLineBar() //柱状图
 
@@ -310,7 +304,6 @@ export default {
     //     console.log(error)
     //   })
   },
-
   methods: {
     // 路由跳转详情页
     goDetail() {
@@ -327,10 +320,7 @@ export default {
       this.$http
         .post('http://MonthData.cn')
         .then(res => {
-          console.log("yes");
-          console.log(res.data.dirlist[0])
           this.monthData.txamtOne = res.data.data[0].txamt
-          console.log("2",res.data.dirlist[0])
           this.linePie.setOption({
             graphic: {
               type: 'text',
