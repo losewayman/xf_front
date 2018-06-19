@@ -1,7 +1,7 @@
 <template>
 <div>
     <el-row>
-        <el-row>
+        <!-- <el-row>
             <el-col :span="18">
                 <div class="grid-content">
                     <div class="move date">
@@ -19,8 +19,8 @@
                     </div>
                 </div>
             </el-col>
-        </el-row>
-        <el-row v-for="item in detailData" :key="item.txdate" style="border-bottom: 1px solid #80808082;">
+        </el-row> -->
+        <!-- <el-row v-for="item in detailData" :key="item.txdate" style="border-bottom: 1px solid #80808082;">
                 <el-col :span="19">
                     <div class="move dir ">
                         <p class="placeShop">{{ item.dir }}</p>
@@ -33,7 +33,19 @@
                         {{item.txamt}}
                     </div>
                 </el-col>
-            </el-row>
+        </el-row> -->
+
+        <el-card shadow="hover" v-for="item in detailData" :key="item.txdate" >
+             <div slot="header" class="clearfix">
+                <span>{{item.txdate}}</span>
+                <el-tag>{{item.txamt}}</el-tag>
+            </div>
+            <div class="text item">
+                {{item.shopname}}
+            </div>
+        </el-card>
+
+
     </el-row>
         
 </div>
