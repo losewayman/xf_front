@@ -22,13 +22,12 @@
                 </el-col>
             </el-row>
 
-            <el-row v-for="item in items">
+            <!-- <el-row v-for="item in items" :key="item.dir">
                 <el-col :span="19">
                     <div class="move dir ">
                         <p class="placeShop">{{ item.dir }}</p>
                         <p class="shopName">{{item.shopname}}</p>
                     </div>
-
                 </el-col>
                 <el-col :span="5">
                     <div class="dircolor deatilCost">
@@ -36,7 +35,7 @@
                         {{item.txamt}}
                     </div>
                 </el-col>
-            </el-row>
+            </el-row> -->
 
             <el-row style="border-top: 1px solid #80808082;">
 
@@ -60,7 +59,7 @@
                 </el-col>
             </el-row>
 
-            <el-row v-for="item in items">
+            <!-- <el-row v-for="item in items" :key="item.dir">
                 <el-col :span="19">
                     <div class="move dir ">
                         <p class="placeShop">{{ item.dir }}</p>
@@ -74,7 +73,7 @@
                         {{item.txamt}}
                     </div>
                 </el-col>
-            </el-row>
+            </el-row> -->
 
             <el-row style="border-top: 1px solid #80808082;">
 
@@ -98,7 +97,7 @@
                 </el-col>
             </el-row>
 
-            <el-row v-for="item in items">
+            <!-- <el-row v-for="item in items" :key="item.dir">
                 <el-col :span="19">
                     <div class="move dir">
                         <p class="placeShop">{{ item.dir }}</p>
@@ -114,7 +113,7 @@
                         </p>
                     </div>
                 </el-col>
-            </el-row>
+            </el-row> -->
         </el-row>
     </div>
 </template>
@@ -136,11 +135,11 @@ export default {
     }
   },
   mounted() {
-    let that = this
+    let _this = this
     this.$http.post('http://MonthData.cn').then(function(res) {
       // console.log(that);
       console.log(res)
-      that.items = res.data.data
+      _this.items = res.data.data
     })
   }
 }
