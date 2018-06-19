@@ -19,8 +19,8 @@
     </el-row>
 
     <div class="con_flow">
-      <img :src="imgRed" alt="">
-      <span>消费流水</span>
+      <img :src="imgRed" alt="" class="ll">
+      <span class="ss">消费流水</span>
     </div>
     <el-row>
       <el-col :span="12">
@@ -28,20 +28,23 @@
           <p class="date">{{dayData.daily}}</p>
         </div>
         <div class="conPlace">
-          <div class="place">
-            <img src="" alt="">
+          <div class="place qq">
+            <div class="imgdiv"><img src="./../assets/u13.jpg" alt="" class="img"></div>
+            <div class="pdiv">
             <p class="dir">{{dayData.dirOne}}</p>
-            <p class="shopname">{{dayData.shopnameOne}}</p><br>
+            <p class="shopname">{{dayData.shopnameOne}}</p><br></div>
           </div>
-          <div>
-            <img src="" alt="">
+          <div class="qq">
+            <div class="imgdiv"><img src="./../assets/u13.jpg" alt=""  class="img"></div>
+            <div class="pdiv">
             <p class="dir">{{dayData.dirOne}}</p>
-            <p class="shopname">{{dayData.shopnameOne}}</p><br>
+            <p class="shopname">{{dayData.shopnameOne}}</p><br></div>
           </div>
-          <div>
-            <img src="" alt="">
+          <div  class="qq">
+            <div class="imgdiv"><img src="./../assets/u13.jpg" alt=""  class="img"></div>
+            <div  class="pdiv">
             <p class="dir">{{dayData.dirOne}}</p>
-            <p class="shopname">{{dayData.shopnameOne}}</p>
+            <p class="shopname">{{dayData.shopnameOne}}</p></div>
           </div>
         </div>
       </el-col>
@@ -49,7 +52,7 @@
         <div class="grid-content bg-purple-light right">
           <p class="pay">支出{{dayData.pay}}</p>
         </div>
-        <div class="pay content">
+        <div class="content">
           <p class="payDetail">{{dayData.txamtOne}}</p>
           <p class="payDetail">{{dayData.txamtOne}}</p>
           <p class="payDetail">{{dayData.txamtOne}}</p>
@@ -70,55 +73,51 @@
       <el-col :span="24">
         <div class="tabs">
           <el-tabs v-model="activeName" @tab-click="handleClick" class="tabsWidth">
-            <el-tab-pane label="1月" name="first" style="width:100%;">
+            <el-tab-pane label="1月" name="first" style="width:100%;" class="eltab">
             </el-tab-pane>
-            <el-tab-pane label="2月" name="second" style="width:100%;">
+            <el-tab-pane label="2月" name="second" style="width:100%;"  class="eltab">
             </el-tab-pane>
-            <el-tab-pane label="3月" name="third" style="width:100%;">
+            <el-tab-pane label="3月" name="third" style="width:100%;" class="eltab">
             </el-tab-pane>
-            <el-tab-pane label="4月" name="fourth" style="width:100%;">
+            <el-tab-pane label="4月" name="fourth" style="width:100%;" class="eltab">
             </el-tab-pane>
-            <el-tab-pane label="5月" name="fourth" style="width:100%;">
+            <el-tab-pane label="5月" name="fourth" style="width:100%;" class="eltab">
             </el-tab-pane>
-            <el-tab-pane label="6月" name="fourth" style="width:100%;">
+            <el-tab-pane label="6月" name="fourth" style="width:100%;" class="eltab">
             </el-tab-pane>
           </el-tabs>
         </div>
-        <img :src="imgRed" alt="">
-        <span>吃货统计</span>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="9">
-        <img :src="imgRed" alt="">
-        <span style="">支出分类</span>
         <div id="pie"></div>
       </el-col>
       <el-col :span="15">
         <div class="">
           <div class="vertical">
             <div class="padding">
-              <img :src="imgOne" alt="" class="icon">
+              <img :src="imgOne" alt="" class="icon ll" >
               <p class="middle">旭日苑
-                <p class="middleInline">{{monthData.txamtOne}}</p>
+                <span class="middleInline">{{monthData.txamtOne}}</span>
               </p>
             </div>
             <div class="padding">
-              <img :src="imgTwo" alt="" class="icon">
+              <img :src="imgTwo" alt="" class="icon ll">
               <p class="middle">美广
-                <p class="middleInline">{{monthData.txamtOne}}</p>
+                <span class="middleInline">{{monthData.txamtOne}}</span>
               </p>
             </div>
             <div class="padding">
-              <img :src="imgThree" alt="" class="icon">
+              <img :src="imgThree" alt="" class="icon ll">
               <p class="middle">超市
-                <p class="middleInline">{{monthData.txamtOne}}</p>
+                <span class="middleInline">{{monthData.txamtOne}}</span>
               </p>
             </div>
             <div class="padding">
-              <img :src="imgFour" alt="" class="icon">
+              <img :src="imgFour" alt="" class="icon ll">
               <p class="middle">洗澡
-                <p class="middleInline">{{monthData.txamtOne}}</p>
+                <span class="middleInline">{{monthData.txamtOne}}</span>
               </p>
             </div>
           </div>
@@ -127,7 +126,7 @@
     </el-row>
 
     <el-row type="flex" justify="center">
-      <div id="demo" style="width: 100%; height: 400px; overflow: scorll"></div>
+      <div id="demo" style="width: 100%; height: 300px; overflow: scorll"></div>
     </el-row>
   </div>
 </template>
@@ -187,6 +186,7 @@ export default {
           trigger: 'item',
           formatter: '{a} <br/>{b}: {c} ({d}%)'
         },
+        color:['#48cda6','#968ade','#fd87ab','#FF69B4'],//,'#ffdf33'
         series: [
           {
             name: '访问来源',
@@ -199,7 +199,7 @@ export default {
                 position: 'center'
               },
               emphasis: {
-                show: true,
+                show: false,
                 textStyle: {
                   fontSize: '30',
                   fontWeight: 'bold'
@@ -217,19 +217,38 @@ export default {
         ]
       },
       getBarOption: {
-        title: { text: '' },
+         title: {//标题组件
+                text: '吃货统计',
+                top:'5px',
+                left:'8px',//标题的位置 默认是left，其余还有center、right属性
+                textStyle: {    
+                color: "#696969",    
+                fontSize: 14,   
+                }
+            },
         tooltip: {},
-        xAxis: {
+        xAxis: [{
           data: ['香锅', '冒菜', '土豆片夹馍', '方便面', '快餐'],
           axisTick: {
             inside: true,
             show: false
+          },
+          axisLabel:{
+            formatter:function(val){
+                return val.split("").join("\n");
+            }
           }
-        },
+        }],
+         grid: { // 控制图的大小，调整下面这些值就可以，
+             x: 40,
+             x2: 10,
+             y2: 80,// y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
+         },
         yAxis: {
           allowDecimals: Boolean,
           ceiling: 160,
           max: 160,
+          name:'（金额/元）',
           min: 0,
           splitNumber: 10 //改变坐标轴的分割段数
         },
@@ -332,6 +351,15 @@ export default {
           this.monthData.txamtOne = res.data.data[0].txamt
           console.log("2",res.data.dirlist[0])
           this.linePie.setOption({
+             title: {//标题组件
+                text: '支出分类',
+                top:'10px',
+                left:'8px',//标题的位置 默认是left，其余还有center、right属性
+                textStyle: {    
+                color: "#696969",    
+                fontSize: 14,   
+                }
+            },
             graphic: {
               type: 'text',
               left: 'center',
@@ -348,14 +376,17 @@ export default {
                 color: '#39CCCC'
               }
             },
+            tooltip:{
+              position:['50%','50%'],
+            },
             series: [
               {
+                radius:['45%','60%'] ,
                 data: [
                   { value: res.data.dirlist[0].dirx, name: '旭日苑' },
                   { value: res.data.dirlist[0].dirm, name: '美广' },
-                  { value: res.data.dirlist[0].dirs, name: '商店' },
-                  { value: res.data.dirlist[0].dird, name: '东升苑' },
-                  { value: res.data.dirlist[0].dirq, name: '其他' }
+                  { value: res.data.dirlist[0].dirs, name: '超市' },
+                  { value: res.data.dirlist[0].dirq, name: '澡堂' }
                 ]
               }
             ]
@@ -399,13 +430,14 @@ export default {
   padding: 5px 0;
 }
 .vertical {
-  margin-top: 45px;
+  margin-top: 30px;
 }
 .middleInline {
   display: inline;
-  vertical-align: middle; /* 居中对齐， */
+  /* vertical-align: middle; 居中对齐， */
   position: absolute;
-  right: 60px;
+  right: 30px;
+  
 }
 .icon {
   vertical-align: middle; /* 居中对齐， */
@@ -415,16 +447,46 @@ export default {
   vertical-align: middle; /* 居中对齐， */
   display: inline-block;
   margin-left: 10px;
+  width:60%;
+  font-size: 14px;
 }
 
 .tabsWidth {
-  width: 500px;
+  font-size: 13px;
+  height: 33px;
 }
 #pie {
   width: 200px;
   height: 200px;
 }
-
+.qq{
+  overflow: auto;
+}
+.img{
+  width:40px;
+  height: 40px;
+}
+.imgdiv{
+  width:40px;
+  height: 40px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 15px;
+  overflow: hidden;
+  margin-top:4px;
+}
+.pdiv{
+  float: left;
+  padding-top:8px;
+  height: 50px;
+  box-sizing: border-box;
+}
+.ll{
+  display:inline-block;
+  width:5px;
+  height: 5px;
+  border-radius: 50%;
+}
 .viewAll {
   text-align: center;
 }
@@ -436,31 +498,43 @@ export default {
 .tabs {
   display: flex;
   justify-content: center;
+  width:100%;
   /* width: 100% */
 }
 .pass {
-  background-color: #80808063;
-  height: 25px;
+  background-color: 		#DCDCDC;
+  height: 15px;
   margin-top: 5px;
 }
 .pay {
-  padding: 10px 0;
+  padding: 5px 20px;
   text-align: end;
-  margin-right: 20px;
+  font-size: 14px;
+  background-color:	#DCDCDC;
 }
+.payDetail{
+  padding:0px;
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  padding-left: 80px;
+}
+
 .date {
-  margin-left: 20px;
-  padding: 10px 0;
-  padding: 10px 0;
+  padding: 5px 20px;
+  font-size: 14px;
+  background-color:#DCDCDC;
 }
 .conPlace {
   margin-left: 20px;
 }
 .shopname {
   color: gray;
+  font-size: 12px;
 }
 .dir {
-  font-size: 20px;
+  font-size: 14px;
 }
 .con_flow {
   margin: 10px 0 10px 25px;
@@ -477,17 +551,14 @@ export default {
   justify-content: center;
 }
 .bg-purple {
-  background: #d3dce6;
+  background: #E0FFFF;
 }
 .bg-purple-light {
-  background: #d3dce6;
+  background: #E0FFFF;
 }
 .grid-content {
   border-radius: 4px;
-  min-height: 36px;
-}
-.content {
-  margin-top: 5px;
+  min-height: 25px;
 }
 </style>
 

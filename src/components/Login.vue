@@ -116,14 +116,14 @@ export default {
 .logo_pic {
   display: flex;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 60px;
 }
 .img {
   width: 30%;
   height: 30%;
 }
 .el-form {
-  padding-top: 35px;
+  padding-top: 20px;
 }
 .identify .el-input__inner {
   border-top: 1px solid black;
