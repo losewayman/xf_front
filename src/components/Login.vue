@@ -170,9 +170,9 @@ export default {
 }
 
 .logo_pic {
-    display: flex;
-    justify-content: center;
-    padding-top: 100px;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
 }
 
 .img {
@@ -181,7 +181,7 @@ export default {
 }
 
 .el-form {
-    padding-top: 35px;
+  padding-top: 20px;
 }
 
 .identify .el-input__inner {
