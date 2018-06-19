@@ -430,7 +430,7 @@ export default {
 
                 if (res.data.status === 0) {
                     _this.dayData.pay = res.data.cost;
-                    _this.dayData.data = res.data.data;
+                    _this.dayData.data = res.data.data.slice(0,2);
 
                 } else {
                     _this.$message.error("获取失败");
