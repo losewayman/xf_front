@@ -187,6 +187,14 @@ import picFour from './../assets/u108.png'
 
 let dayjs = require('dayjs');
 
+const picDic = {
+    dirx: './../assets/dirx.png',
+    dird: './../assets/dird.png',
+    dirm: './../assets/dirm.png',
+    dirs: './../assets/dirs.png',
+    dirq: './../assets/dirq.png',
+};
+
 export default {
     data() {
         return {

@@ -1,18 +1,5 @@
 <template>
 <div>
-    <!-- <el-row v-for="key in detailKey" :key="key.key">
-        <p>{{key.key}}</p>
-        <el-card shadow="hover" v-for="item in detailDic[key.key]" :key="item.txdate" >
-             <div slot="header" class="clearfix">
-                <span>{{item.txdate}}</span>
-                <el-tag>{{item.txamt}}</el-tag>
-            </div>
-            <div class="text item">
-                {{item.shopname}}
-            </div>
-        </el-card>
-    </el-row> -->
-
     <el-collapse v-model="activeNames" @change="handleChange" >
         <el-collapse-item :title="key.key" :name="key.key" v-for="key in detailKey" :key="key.key">
             <el-card shadow="hover" v-for="item in detailDic[key.key]" :key="item.txdate" >
@@ -26,7 +13,6 @@
         </el-card>
         </el-collapse-item>
     </el-collapse>
-
 </div>
 </template>
 
@@ -34,6 +20,14 @@
 
 <script>
 let dayjs = require('dayjs');
+
+const picDic = {
+    dirx: './../assets/dirx.png',
+    dird: './../assets/dird.png',
+    dirm: './../assets/dirm.png',
+    dirs: './../assets/dirs.png',
+    dirq: './../assets/dirq.png',
+};
 
 export default {
     data() {
