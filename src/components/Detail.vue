@@ -3,8 +3,14 @@
     <el-collapse v-model="activeNames" @change="handleChange" >
         <el-collapse-item :name="key.key" v-for="key in detailKey" :key="key.key">
             <template slot="title">
-                <span>{{key.key}}</span>
-                <span>{{'星期' + key.week}}</span>
+                <img
+                    :src="imgOne"
+                    alt=""
+                    class="icon ll"
+                    style="margin-left: 10px; border: none; border-radius: 50%"
+                >
+                <span style="margin-left: 30px">{{key.key}}</span>
+                <span style="margin-right: 50px; float: right">{{'星期' + turnWeek[key.week]}}</span>
             </template>
             
             <el-card shadow="hover" v-for="item in detailDic[key.key]" :key="item.txdate" class="box-card">
@@ -23,6 +29,7 @@
 
 <script>
 let dayjs = require('dayjs');
+import picOne from './../assets/u106.png'
 
 import dirx from './../assets/dirx.png';
 import dird from './../assets/dird.png';
@@ -40,11 +47,24 @@ const picDic = {
     "无": dirq,
 };
 
+// 星期数字转化为汉字字典
+const turnWeek = {
+    "1": "一",
+    "2": "二",
+    "3": "三",
+    "4": "四",
+    "5": "五",
+    "6": "六",
+    "7": "日",
+};
+
 export default {
     data() {
         return {
+            turnWeek: turnWeek,
+            imgOne: picOne,
             picDic: picDic,
-            activeNames: ['1'],
+            activeNames: [],
             detailData: [],
             cost: '',
             detailDic: {},
@@ -72,13 +92,15 @@ export default {
                         } else {
                             orderByKey.push({
                                 key: theDay,
-                                week: dayjs(theDay).day()
+                                week: dayjs(theDay).day().toString()
                             });
                             orderBydate[theDay] = [item];
                         }
                     }
                     _this.detailDic = orderBydate;
                     _this.detailKey = orderByKey;
+                    // 默认打开第一个元素
+                    _this.activeNames = [orderByKey[0].key];
                     _this.detailData = res.data.data;
                     _this.cost = res.data.cost;
                 } else {
