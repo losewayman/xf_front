@@ -1,41 +1,8 @@
 <template>
 <div>
-    <el-row>
-        <!-- <el-row>
-            <el-col :span="18">
-                <div class="grid-content">
-                    <div class="move date">
-                        <p>z暂无</p>
-                    </div>
-                </div>
-            </el-col>
-            <el-col :span="6">
-                <div class="grid-content">
-                    <div class="dirFont">
-                        <span>
-                                <i class="el-icon-date dircolor"></i>
-                                <span class="dir dircolor span">{{cost}}</span>
-                        </span>
-                    </div>
-                </div>
-            </el-col>
-        </el-row> -->
-        <!-- <el-row v-for="item in detailData" :key="item.txdate" style="border-bottom: 1px solid #80808082;">
-                <el-col :span="19">
-                    <div class="move dir ">
-                        <p class="placeShop">{{ item.dir }}</p>
-                        <p class="shopName">{{item.shopname}}</p>
-                    </div>
-                </el-col>
-                <el-col :span="5">
-                    <div class="dircolor deatilCost">
-                        <i class="el-icon-date"></i>
-                        {{item.txamt}}
-                    </div>
-                </el-col>
-        </el-row> -->
-
-        <el-card shadow="hover" v-for="item in detailData" :key="item.txdate" >
+    <!-- <el-row v-for="key in detailKey" :key="key.key">
+        <p>{{key.key}}</p>
+        <el-card shadow="hover" v-for="item in detailDic[key.key]" :key="item.txdate" >
              <div slot="header" class="clearfix">
                 <span>{{item.txdate}}</span>
                 <el-tag>{{item.txamt}}</el-tag>
@@ -44,20 +11,38 @@
                 {{item.shopname}}
             </div>
         </el-card>
+    </el-row> -->
 
+    <el-collapse v-model="activeNames" @change="handleChange" >
+        <el-collapse-item :title="key.key" :name="key.key" v-for="key in detailKey" :key="key.key">
+            <el-card shadow="hover" v-for="item in detailDic[key.key]" :key="item.txdate" >
+             <div slot="header" class="clearfix">
+                <span>{{item.txdate}}</span>
+                <el-tag style="float: right">{{item.txamt}}</el-tag>
+            </div>
+            <div class="text item">
+                {{item.shopname}}
+            </div>
+        </el-card>
+        </el-collapse-item>
+    </el-collapse>
 
-    </el-row>
-        
 </div>
 </template>
 
 
+
 <script>
+let dayjs = require('dayjs');
+
 export default {
     data() {
         return {
-            detailData:'',
-            cost:'',
+            activeNames: ['1'],
+            detailData: [],
+            cost: '',
+            detailDic: {},
+            detailKey: 　[],
         }
     },
     mounted() {
@@ -71,6 +56,23 @@ export default {
             })
             .then(function (res) {
                 if (res.data.status === 0) {
+                    // 数据整理 按照日期对数据进行分类
+                    let orderBydate = {};
+                    let orderByKey = [];
+                    for (let item of res.data.data) {
+                        let theDay = dayjs(item.txdate).format('YYYY-MM-DD');
+                        if (theDay in orderBydate) {
+                            orderBydate[theDay].push(item);
+                        } else {
+                            orderByKey.push({
+                                key: theDay
+                            });
+                            orderBydate[theDay] = [item];
+                        }
+                    }
+                    console.log(orderByKey);
+                    _this.detailDic = orderBydate;
+                    _this.detailKey = orderByKey;
                     _this.detailData = res.data.data;
                     _this.cost = res.data.cost;
                 } else {
@@ -83,6 +85,7 @@ export default {
     }
 }
 </script>
+
 
 
 <style scoped>

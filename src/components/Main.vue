@@ -1,18 +1,17 @@
 <template>
 <div>
-
     <el-row>
         <el-col :span="12">
             <div class="grid-content bg-purple cash">
                 <p class="text-cash">账户余额<br>
-                    <span class="text-cash-span">{{dayData.balance}}</span>
+                    <span class="text-cash-span">{{parseInt(balance)}}</span>
                 </p>
             </div>
         </el-col>
         <el-col :span="12">
             <div class="grid-content bg-purple-light cash">
-                <p class="text-cash">{{checkTab}}月支出<br>
-                    <span class="text-cash-span">{{parseInt(dayData.cost)}}</span>
+                <p class="text-cash">本月支出<br>
+                    <span class="text-cash-span">{{parseInt(cost)}}</span>
                 </p>
             </div>
         </el-col>
@@ -45,34 +44,35 @@
                         ></div> -->
                     <div class="pdiv">
                         <p class="dir">{{item.dir}}</p>
-                        <p class="shopname">{{item.shopname}}</p><br></div>
+                        <p class="shopname">{{item.shopname}}</p>
+                    </div>
+                  </div>
             </div>
-</div>
-</el-col>
-<el-col :span="12">
-    <div class="grid-content bg-purple-light right">
-        <p class="pay">支出{{dayData.pay}}</p>
-    </div>
-    <div
-        class="content"
-        v-for="item in dayData.data"
-    >
-        <p class="payDetail">{{item.txamt}}</p>
-        </div>
-</el-col>
-<el-col :span="24">
-    <div class="viewAll">
-        <p
-            @click="goDetail"
-            class="viewAll_a"
-        >查看全部 ></p>
-    </div>
-</el-col>
+          </el-col>
+
+          <el-col :span="12">
+              <div class="grid-content bg-purple-light right">
+                  <p class="pay">支出{{dayData.pay}}</p>
+              </div>
+              <div
+                  class="content"
+                  v-for="item in dayData.data"
+              >
+                  <p class="payDetail">{{item.txamt}}</p>
+              </div>
+          </el-col>
+
+          <el-col :span="24">
+              <div class="viewAll">
+                  <p
+                      @click="goDetail"
+                      class="viewAll_a"
+                  >查看全部 ></p>
+              </div>
+          </el-col>
 </el-row>
 
-<div class="pass">
-
-</div>
+<div class="pass"></div>
 
 <el-row
     type="flex"
@@ -86,7 +86,7 @@
                 class="tabsWidth"
             >
                 <el-tab-pane
-                    :label="item.title"
+                    :label="item.title + '月'"
                     :name="item.title"
                     style="width:100%;"
                     class="eltab"
@@ -112,7 +112,7 @@
                             class="icon ll"
                         >
                             <p class="middle">旭日苑
-                                <span class="middleInline">{{monthData.dirlist.dirx}}</span>
+                                <span class="middleInline">{{parseInt(monthData.dirlist.dirx)}}</span>
                             </p>
                     </div>
                     <div class="padding">
@@ -122,7 +122,7 @@
                             class="icon ll"
                         >
                             <p class="middle">东升苑
-                                <span class="middleInline">{{monthData.dirlist.dird}}</span>
+                                <span class="middleInline">{{parseInt(monthData.dirlist.dird)}}</span>
                             </p>
                     </div>
                     <div class="padding">
@@ -132,7 +132,7 @@
                             class="icon ll"
                         >
                             <p class="middle">美广
-                                <span class="middleInline">{{monthData.dirlist.dirm}}</span>
+                                <span class="middleInline">{{parseInt(monthData.dirlist.dirm)}}</span>
                             </p>
                     </div>
                     <div class="padding">
@@ -142,7 +142,7 @@
                             class="icon ll"
                         >
                             <p class="middle">超市
-                                <span class="middleInline">{{monthData.dirlist.dirs}}</span>
+                                <span class="middleInline">{{parseInt(monthData.dirlist.dirs)}}</span>
                             </p>
                     </div>
                     <div class="padding">
@@ -152,7 +152,7 @@
                             class="icon ll"
                         >
                             <p class="middle">其他
-                                <span class="middleInline">{{monthData.dirlist.dirq}}</span>
+                                <span class="middleInline">{{parseInt(monthData.dirlist.dirq)}}</span>
                             </p>
                     </div>
                 </div>
@@ -176,6 +176,7 @@
 
 
 
+
 <script>
 import * as echarts from 'echarts'
 import Red from './../assets/u107.png'
@@ -184,7 +185,7 @@ import picTwo from './../assets/u109.png'
 import picThree from './../assets/u143.png'
 import picFour from './../assets/u108.png'
 
-const dayjs = require('dayjs');
+let dayjs = require('dayjs');
 
 export default {
     data() {
@@ -201,6 +202,7 @@ export default {
             dayData: {
                 pay: '',
                 data: [],
+                daily: dayjs().format("YYYY-MM-DD"),
             },
             weekData: {},
             monthData: {
@@ -293,7 +295,7 @@ export default {
     mounted() {
         this.drawLinePie() //扇形图
         // 初始化月份
-        this.checkTab = dayjs().year();
+        this.checkTab = dayjs().month() + 1;
         let _this = this;
         // let enddate = dayjs().format("YYYY-MM-DD");
         // let begindate= dayjs().subtract(1,'month').format("YYYY-MM-DD");
@@ -312,13 +314,7 @@ export default {
             })
             .then(function (res) {
                 if (res.data.status === 0) {
-                    _this.dayData.balance = res.data.data[0].balance
-                    // _this.dayData.cost = res.data.cost
-                    _this.dayData.pay = parseInt(res.cost);
-                    // _this.dayData.dirOne = res.data.data[0].dir
-                    // _this.dayData.daily = res.data.data[0].txdate
-                    // _this.dayData.shopnameOne = res.data.data[0].shopname
-                    // _this.dayData.txamtOne = res.data.data[0].txamt
+                    _this.balance = parseInt(res.data.data[0].balance);
                 } else {
                     _this.$message.error("获取失败");
                 }
@@ -336,9 +332,8 @@ export default {
                 },
             })
             .then(function (res) {
-
                 if (res.data.status === 0) {
-                    _this.dayData.cost = parseInt(res.data.cost);
+                    _this.cost = parseInt(res.data.cost);
                 } else {
                     _this.$message.error("获取失败");
                 }
@@ -356,11 +351,9 @@ export default {
                 },
             })
             .then(function (res) {
-
                 if (res.data.status === 0) {
                     _this.dayData.pay = parseInt(res.data.cost);
                     _this.dayData.data = res.data.data.slice(0, 3);
-
                 } else {
                     _this.$message.error("获取失败");
                 }
@@ -491,12 +484,20 @@ export default {
             // 对吃货种类进行处理 两类数组一一对应
             let titleArr = [];
             let valueArr = [];
-            console.log(this.monthData.toplist);
-            for (let item of this.monthData.toplist) {
+            let allData = this.monthData.toplist;
+            // 柱状图依据消费sum进行前五排序
+            let compare = function (x, y) {
+                return y['sum'] - x['sum'];
+            }
+            allData.sort(compare);
+            // 截取前五
+            let showData = allData.slice(0, 5);
+
+            for (let item of showData) {
                 titleArr.push(item.shopname);
                 valueArr.push(item.sum);
             }
-            console.log(titleArr, valueArr);
+
             this.lineBar.setOption({
                 xAxis: {
                     data: titleArr
@@ -510,6 +511,7 @@ export default {
     }
 }
 </script>
+
 
 
 

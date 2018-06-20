@@ -4,7 +4,8 @@
         <img
             v-bind:src="imgUrl"
             class="img"
-            alt="icon"
+            alt="智邮普创"
+            style="border:#ccc solid 1px; border-radius: 50%"
         >
     </div>
 
@@ -14,6 +15,7 @@
             :model="ruleForm"
             ref="ruleForm"
             :rules="rules"
+            @submit.native.prevent
         >
             <el-form-item
                 prop="cardpwd"
@@ -24,6 +26,7 @@
                     v-model="ruleForm.cardpwd"
                     placeholder="请输入你的一卡通密码"
                     class="login-form-input"
+                    
                 />
                 </el-form-item>
 
@@ -72,7 +75,7 @@ export default {
     data() {
         return {
             checkImg: "http://118.126.110.182:8002/static/img/chckcode.jpg",
-            imgUrl: "http://118.126.110.182:8002/static/dist/src/assets/u13.jpg",
+            imgUrl: "http://118.126.110.182:8002/static/dist/src/assets/logo.jpg",
             ruleForm: {
                 cardpwd: "",
                 validate: ""
