@@ -184,20 +184,27 @@ import picOne from './../assets/u106.png'
 import picTwo from './../assets/u109.png'
 import picThree from './../assets/u143.png'
 import picFour from './../assets/u108.png'
+import dirx from './../assets/dirx.png';
+import dird from './../assets/dird.png';
+import dirm from './../assets/dirm.png';
+import dirs from './../assets/dirs.png';
+import dirq from './../assets/dirq.png';
 
 let dayjs = require('dayjs');
 
 const picDic = {
-    dirx: './../assets/dirx.png',
-    dird: './../assets/dird.png',
-    dirm: './../assets/dirm.png',
-    dirs: './../assets/dirs.png',
-    dirq: './../assets/dirq.png',
+    "旭日苑" :dirx,
+    "东升苑": dird,
+    "美广": dirm,
+    "超市": dirs,
+    "其他": dirq,
+    "无": dirq,
 };
 
 export default {
     data() {
         return {
+            picDic: picDic,
             checkTab: 0,
             monthLen: 0,
             imgOne: picOne,
