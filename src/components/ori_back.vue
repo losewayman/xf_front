@@ -36,42 +36,40 @@
                     v-for="item in dayData.data"
                     :key="item.txdate"
                 >
+                    <!-- <div class="imgdiv">
+                        <img
+                            src="./../assets/u13.jpg"
+                            alt=""
+                            class="img"
+                        ></div> -->
                     <div class="pdiv">
-                        <div class="dirPic">
-                            <img
-                                :src="picDic[item.dir]"
-                                alt=""
-                                class="dirPicDeatil"
-                            ></div>
-                        <div class="dirFont">
-                            <p class="dir">{{item.dir==='无'?'其他':item.dir}}</p>
-                            <p class="shopname">{{item.shopname==='无'?'其他':item.shopname}}</p>
-                        </div>
+                        <p class="dir">{{item.dir}}</p>
+                        <p class="shopname">{{item.shopname}}</p>
                     </div>
+                  </div>
             </div>
-</div>
-</el-col>
+          </el-col>
 
-<el-col :span="12">
-    <div class="grid-content bg-purple-light right">
-        <p class="pay">今日支出{{dayData.pay}}</p>
-    </div>
-    <div
-        class="content"
-        v-for="item in dayData.data"
-    >
-        <p class="payDetail">{{item.txamt}}</p>
-        </div>
-</el-col>
+          <el-col :span="12">
+              <div class="grid-content bg-purple-light right">
+                  <p class="pay">支出{{dayData.pay}}</p>
+              </div>
+              <div
+                  class="content"
+                  v-for="item in dayData.data"
+              >
+                  <p class="payDetail">{{item.txamt}}</p>
+              </div>
+          </el-col>
 
-<el-col :span="24">
-    <div class="viewAll">
-        <p
-            @click="goDetail"
-            class="viewAll_a"
-        >查看全部 ></p>
-    </div>
-</el-col>
+          <el-col :span="24">
+              <div class="viewAll">
+                  <p
+                      @click="goDetail"
+                      class="viewAll_a"
+                  >查看全部 ></p>
+              </div>
+          </el-col>
 </el-row>
 
 <div class="pass"></div>
@@ -192,10 +190,10 @@ import dirm from './../assets/dirm.png';
 import dirs from './../assets/dirs.png';
 import dirq from './../assets/dirq.png';
 
-let dayjs = require('dayjs')
+let dayjs = require('dayjs');
 
 const picDic = {
-    "旭日苑": dirx,
+    "旭日苑" :dirx,
     "东升苑": dird,
     "美广": dirm,
     "超市": dirs,
@@ -269,23 +267,21 @@ export default {
                 color: ['#3398DB'],
                 tooltip: {
                     trigger: 'axis',
-                    axisPointer: {
-                        // 坐标轴指示器，坐标轴触发有效
+                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
                         type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                     }
                 },
                 grid: {
-                    y2: 140
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
                 },
                 xAxis: [{
                     type: 'category',
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                     axisTick: {
                         alignWithLabel: true
-                    },
-                    axisLabel: {
-                      interval: 0, // 底标信息全显示
-                      rotate: -30, // -30度显示
                     }
                 }],
                 yAxis: [{
@@ -295,28 +291,12 @@ export default {
                     name: '消费数额',
                     type: 'bar',
                     barWidth: '60%',
-                    data: [],
-                    itemStyle: {
-                        //通常情况下：
-                        normal: {
-                            //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
-                            color: function (params) {
-                                var colorList = [
-                                    '#FF6666',
-                                    '#FF9966',
-                                    '#33CC66',
-                                    '#3399FF',
-                                    '#9966CC'
-                                ]
-                                return colorList[params.dataIndex]
-                            }
-                        }
-                    }
+                    data: [10, 52, 200, 334, 390, 330, 220]
                 }]
             }
         }
-},
-created() {
+    },
+    created() {
         let monthLen = Number(dayjs().month()) + 1;
         let resultMonth = [];
         for (let i = 0; i < monthLen; i++) {
@@ -337,11 +317,11 @@ created() {
 
         // 获取余额 截止到上个月当前日期
         _this.$http({
-                url: 'http://118.126.110.182:8002/api/getNewData',
-                method: 'get',
+                url: "http://118.126.110.182:8002/api/getNewData",
+                method: "get",
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
                 // params: {
                 //     begindate,
                 //     enddate,
@@ -351,52 +331,52 @@ created() {
                 if (res.data.status === 0) {
                     _this.balance = parseInt(res.data.data[0].balance);
                 } else {
-                    _this.$message.error('获取失败');
+                    _this.$message.error("获取失败");
                 }
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            });
 
         // 获取本月支出数据
         _this.$http({
-                url: 'http://118.126.110.182:8002/api/getOneMonthData',
-                method: 'get',
+                url: "http://118.126.110.182:8002/api/getOneMonthData",
+                method: "get",
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
             })
             .then(function (res) {
                 if (res.data.status === 0) {
                     _this.cost = parseInt(res.data.cost);
                 } else {
-                    _this.$message.error('获取失败');
+                    _this.$message.error("获取失败");
                 }
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            });
 
         // 消费列表详情
-        _this
-            .$http({
-                url: 'http://118.126.110.182:8002/api/getNewData',
-                method: 'get',
+        _this.$http({
+                url: "http://118.126.110.182:8002/api/getNewData",
+                method: "get",
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
             })
             .then(function (res) {
                 if (res.data.status === 0) {
                     _this.dayData.pay = parseInt(res.data.cost);
                     _this.dayData.data = res.data.data.slice(0, 3);
                 } else {
-                    _this.$message.error('获取失败');
+                    _this.$message.error("获取失败");
                 }
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            });
+
     },
     methods: {
         // 路由跳转详情页
@@ -409,62 +389,53 @@ created() {
             // 根据tab值生成对应的年月日
             let getYear = dayjs().year() + '-' + this.checkTab + '-' + '01';
 
-            let begindate = dayjs(getYear)
-                .startOf('month')
-                .format('YYYY-MM-DD')
-            let enddate = dayjs(getYear)
-                .endOf('month')
-                .format('YYYY-MM-DD')
+            let begindate = dayjs(getYear).startOf('month').format("YYYY-MM-DD");
+            let enddate = dayjs(getYear).endOf('month').format("YYYY-MM-DD");
 
             this.drawLinePie({
                 begindate,
                 enddate
-            })
+            });
         },
         //异步axios请求数据，完成扇形统计图
         drawLinePie(monthData) {
-            this.linePie = echarts.init(document.getElementById('pie'))
-            this.linePie.setOption(this.getPieOption)
-            let _this = this
+            this.linePie = echarts.init(document.getElementById('pie'));
+            this.linePie.setOption(this.getPieOption);
+            let _this = this;
             // 获取当月月初和月底时间
-            let begindate = dayjs()
-                .startOf('month')
-                .format('YYYY-MM-DD')
-            let enddate = dayjs()
-                .endOf('month')
-                .format('YYYY-MM-DD')
+            let begindate = dayjs().startOf('month').format("YYYY-MM-DD");
+            let enddate = dayjs().endOf('month').format("YYYY-MM-DD");
             if (monthData) {
-                begindate = monthData.begindate
-                enddate = monthData.enddate
+                begindate = monthData.begindate;
+                enddate = monthData.enddate;
             }
 
-            _this
-                .$http({
-                    url: 'http://118.126.110.182:8002/api/getNewData',
-                    method: 'get',
+
+            _this.$http({
+                    url: "http://118.126.110.182:8002/api/getNewData",
+                    method: "get",
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        "Content-Type": "application/x-www-form-urlencoded"
                     },
                     params: {
                         begindate,
-                        enddate
-                    }
+                        enddate,
+                    },
                 })
                 .then(function (res) {
                     if (res.data.status === 0) {
                         // 按区域消费统计
-                        _this.monthData.dirlist = res.data.dirlist[0]
+                        _this.monthData.dirlist = res.data.dirlist[0];
                         // 按吃货分类统计
-                        _this.monthData.toplist = res.data.toplist
+                        _this.monthData.toplist = res.data.toplist;
                         _this.linePie.setOption({
-                            title: {
-                                //标题组件
+                            title: { //标题组件
                                 text: '支出分类',
                                 top: '10px',
                                 left: '8px', //标题的位置 默认是left，其余还有center、right属性
                                 textStyle: {
-                                    color: '#696969',
-                                    fontSize: 14
+                                    color: "#696969",
+                                    fontSize: 14,
                                 }
                             },
                             graphic: {
@@ -484,7 +455,7 @@ created() {
                                 }
                             },
                             tooltip: {
-                                position: ['50%', '50%']
+                                position: ['50%', '50%'],
                             },
                             series: [{
                                 radius: ['45%', '60%'],
@@ -513,45 +484,36 @@ created() {
                         })
                         _this.drawLineBar() //柱状图
                     } else {
-                        _this.$message.error('获取失败')
+                        _this.$message.error("获取失败");
                     }
                 })
                 .catch(function (error) {
-                    console.log(error)
-                })
+                    console.log(error);
+                });
+
         },
         // 加载柱状图
         drawLineBar() {
             this.lineBar = echarts.init(document.getElementById('demo'))
-            this.lineBar.setOption(this.getBarOption)
+            this.lineBar.setOption(this.getBarOption);
             // 对吃货种类进行处理 两类数组一一对应
-            let titleArr = []
-            let valueArr = []
-            let allData = this.monthData.toplist
+            let titleArr = [];
+            let valueArr = [];
+            let allData = this.monthData.toplist;
             // 柱状图依据消费sum进行前五排序
             let compare = function (x, y) {
-                return y['sum'] - x['sum']
+                return y['sum'] - x['sum'];
             }
-            allData.sort(compare)
+            allData.sort(compare);
             // 截取前五
-            let showData = allData.slice(0, 5)
+            let showData = allData.slice(0, 5);
 
             for (let item of showData) {
-                titleArr.push(item.shopname)
-                valueArr.push(item.sum)
+                titleArr.push(item.shopname);
+                valueArr.push(item.sum);
             }
 
             this.lineBar.setOption({
-                title: {
-                    //标题组件
-                    text: '吃货统计',
-                    top: '10px',
-                    left: '8px', //标题的位置 默认是left，其余还有center、right属性
-                    textStyle: {
-                        color: '#696969',
-                        fontSize: 14
-                    }
-                },
                 xAxis: {
                     data: titleArr
                 },
@@ -559,10 +521,16 @@ created() {
                     data: valueArr
                 }
             })
+
         }
     }
 }
 </script>
+
+
+
+
+
 
 
 <style scoped>
@@ -600,11 +568,6 @@ created() {
     font-size: 14px;
 }
 
-.dirFont {
-    float: left;
-    padding: 2px 0 2px 15px;
-}
-
 .tabsWidth {
     font-size: 13px;
     height: 33px;
@@ -622,14 +585,6 @@ created() {
 .img {
     width: 40px;
     height: 40px;
-}
-
-.dirPic {
-    float: left;
-    overflow: hidden;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
 }
 
 .imgdiv {
@@ -674,8 +629,8 @@ created() {
 }
 
 .pass {
-    background-color: #e4e4e4;
-    height: 20px;
+    background-color: #DCDCDC;
+    height: 15px;
     margin-top: 5px;
 }
 
@@ -683,11 +638,7 @@ created() {
     padding: 5px 20px;
     text-align: end;
     font-size: 14px;
-    background-color: #e4e4e4;
-}
-
-.dirPicDeatil {
-    height: 40px;
+    background-color: #DCDCDC;
 }
 
 .payDetail {
@@ -696,12 +647,13 @@ created() {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    padding-left: 130px;
+    padding-left: 80px;
 }
 
 .date {
-    padding: 5px 35px;
+    padding: 5px 20px;
     font-size: 14px;
+    background-color: #DCDCDC;
 }
 
 .conPlace {
@@ -714,7 +666,7 @@ created() {
 }
 
 .dir {
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .con_flow {
@@ -728,7 +680,6 @@ created() {
 .text-cash {
     text-align: center;
     vertical-align: middle;
-    background: #ffcc33;
 }
 
 #demo {
@@ -736,8 +687,16 @@ created() {
     justify-content: center;
 }
 
+.bg-purple {
+    background: #E0FFFF;
+}
+
+.bg-purple-light {
+    background: #E0FFFF;
+}
+
 .grid-content {
-    background: #e4e4e4;
+    border-radius: 4px;
     min-height: 25px;
 }
 </style>

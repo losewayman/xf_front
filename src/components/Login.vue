@@ -4,16 +4,19 @@
         <img
             v-bind:src="imgUrl"
             class="img"
-            alt="icon"
+            alt="智邮普创"
+            style="border:#ccc solid 1px; border-radius: 50%"
         >
     </div>
 
     <div class="el-form">
         <el-form
+            :status-icon="true"
             class="form-inline"
             :model="ruleForm"
             ref="ruleForm"
             :rules="rules"
+            @submit.native.prevent
         >
             <el-form-item
                 prop="cardpwd"
@@ -22,8 +25,9 @@
                 <el-input
                     type="password"
                     v-model="ruleForm.cardpwd"
-                    placeholder="请输入你的一卡通密码"
+                    placeholder="一卡通密码"
                     class="login-form-input"
+                    :inline-message	="true"
                 />
                 </el-form-item>
 
@@ -72,7 +76,7 @@ export default {
     data() {
         return {
             checkImg: "http://118.126.110.182:8002/static/img/chckcode.jpg",
-            imgUrl: "http://118.126.110.182:8002/static/dist/src/assets/u13.jpg",
+            imgUrl: "http://118.126.110.182:8002/static/dist/src/assets/logo.jpg",
             ruleForm: {
                 cardpwd: "",
                 validate: ""
@@ -85,7 +89,7 @@ export default {
                 }],
                 validate: [{
                     required: true,
-                    message: '请填写验证码',
+                    message: '请填写四位验证码',
                     trigger: 'change',
                     len: 4,
                 }]
@@ -96,7 +100,8 @@ export default {
     created() {
         // 验证是否需要一卡通密码
         var isPass = this.getCookie('password');
-        console.log('ispass的cookie是', isPass);
+        // console.log('ispass的cookie是', isPass);
+        // isPass = '1';
         if (isPass === '1') {
             this.isPass = true;
         } else if (isPass === '0') {
@@ -211,12 +216,15 @@ export default {
 }
 
 .identify .el-input__inner {
-    border-top: 1px solid black;
-    border-radius: 0;
     width: 90%;
     vertical-align: middle;
+     margin: 0 auto;
+    border: 0 none;
+    border-bottom: 1px solid #c0c4cc;
 }
-
+.el-form-item__error{
+    left: 20%;
+}
 .login-form-input .el-input__inner {
     display: block;
     margin: 0 auto;
